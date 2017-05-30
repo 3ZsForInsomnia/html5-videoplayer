@@ -1,0 +1,44 @@
+<div class="clip">
+  <div *ngIf="!isEditingClipName" class="clip__header--not-editing" (click)="playClip()">
+    <h4 class="clip__title">{{clip.name}}</h4>
+    <div class="clip__edit">
+      <span (click)="editClipName()" class="glyphicon glyphicon-edit"></span>
+      <span (click)="deleteClip()" class="glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
+  <div *ngIf="isEditingClipName" class="clip__header--editing">
+    <input type="text" [(ngModel)]="name" class="form-control">
+    <button type="submit" (click)="saveClipName(name)" class="btn">Save</button>
+    <div class="clip__edit">
+      <span (click)="deleteClip()" class="glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
+  <div class="invalid-text">
+    <p *ngIf="invalidClipTimes">End time must be larger than start time!</p>
+  </div>
+  <div class="clip-times" *ngIf="!isEditingClipTimes">
+    <div>
+      <span>Start Time: {{clip.startTime}}</span>
+    </div>
+    <div>
+      <span>End Time: {{clip.endTime}}</span>
+    </div>
+    <span (click)="editClipTimes()" class="glyphicon glyphicon-edit"></span>
+  </div>
+  <div *ngIf="isEditingClipTimes" class="clip-times" [ngClass]="{'invalid': invalidClipTimes}">
+    <div>
+      <span>Start Time: </span><input type="text" [(ngModel)]="startTime" class="clip-times__input form-control">
+    </div>
+    <div>
+      <span>End Time: </span><input type="text" [(ngModel)]="endTime" class="clip-times__input form-control">
+    </div>
+    <button type="submit" (click)="saveClipTimes(startTime, endTime)" class="clip-times__submit btn">{{submitClipTimesButtonText}}</button>
+  </div>
+  <div>
+    <span>See Tags</span>
+    <span (click)="toggleTagsVisibility()" class="glyphicon" [ngClass]="{'glyphicon-chevron-up': !areTagsVisible, 'glyphicon-chevron-down': areTagsVisible}"></span>
+  </div>
+  <div *ngIf="areTagsVisible">
+    <app-tag-section [tags]="clip.tags" [clipName]="clip.name"></app-tag-section>
+  </div>
+</div>

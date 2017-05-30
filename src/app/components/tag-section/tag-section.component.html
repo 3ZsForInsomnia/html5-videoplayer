@@ -1,0 +1,14 @@
+<div class="tags">
+  <div *ngIf="!noTags" class="tags__list">
+    <div class="tag__single" *ngFor="let tag of tags">
+      <app-tag [tag]="tag"></app-tag>
+    </div>
+  </div>
+  <div *ngIf="noTags" class="tags__none">
+    <span>There are no tags yet! Add some!</span>
+  </div>
+  <div class="tags__add">
+    <input type="text" [(ngModel)]="newTag" class="form-control">
+    <button type="submit" (click)="addNewTag(newTag)" class="btn">Add Tag</button>
+  </div>
+</div>

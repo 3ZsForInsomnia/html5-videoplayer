@@ -1,0 +1,6 @@
+<div class="playlist">
+    <app-playlist-header (nameChanged)="playlistNameChange($event)" 
+        (playOriginalVideo)="playOriginalVideo($event)"
+        [name]="playlistName$ | async" [baseVideoSource]="baseVideoSource$ | async"></app-playlist-header>
+    <app-playlist-clips [baseVideoSource]="baseVideoSource$ | async" [clips]="clips$ | async"></app-playlist-clips>
+</div>

@@ -1,0 +1,64 @@
+.header,
+.tags__add {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__title {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.header__reset {
+    margin: auto 20px;
+}
+
+.new-clip__name,
+.tags__add,
+.new-clip__add-tags {
+    margin: 5px 10px;
+}
+
+.new-clip__times {
+    margin: 5px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
+}
+
+.times__input {
+    display: inline-block;
+    width: 75px;
+}
+
+.tags {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.tag {
+    display: inline;
+}
+
+.new-clip__submit-container {
+    display: flex;
+    align-content: center;
+}
+
+.new-clip__submit {
+    width: 250px;
+    margin: 0 auto;
+}
+
+.invalid {
+    border: red 1px solid;
+}
+
+.invalid-text {
+    text-align: center;
+    color: red;
+}

@@ -1,0 +1,31 @@
+.header {
+    border-bottom: 1px solid grey;
+}
+
+.header__title {
+    margin: 5px auto;
+    display: inline-block;
+    padding-left: 15px;
+}
+
+.header__edit {
+    margin: auto 25px;
+}
+
+.header--not-editing {
+    display: flex;
+}
+
+.header--not-editing:hover {
+    color: lightblue;
+}
+
+.header--editing {
+    display: flex;
+}
+
+.editing__input {
+    font-size: 24px;
+    color: #333;
+    padding-left: 20px;
+}

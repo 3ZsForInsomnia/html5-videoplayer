@@ -1,0 +1,37 @@
+<div class="new-clip">
+  <div class="header">
+    <h3 class="header__title">Add A New Clip</h3>
+    <span (click)="resetNewClipForm()" class="header__reset glyphicon glyphicon-trash"></span>
+  </div>
+  <div class="new-clip__name">
+    <input type="text" [(ngModel)]="clip.name" class="form-control editing__input">
+  </div>
+  <div class="invalid-text">
+    <p *ngIf="invalidValues">End time must be larger than start time!</p>
+  </div>
+  <div class="new-clip__times" [ngClass]="{'invalid': invalidValues}">
+    <div class="times">
+      <span>Start Time: </span><input type="number" [(ngModel)]="clip.startTime" class="times__input form-control">
+    </div>
+    <div class="times">
+      <span>End Time: </span><input type="number" [(ngModel)]="clip.endTime" class="times__input form-control">
+    </div>
+  </div>
+  <div class="tags">
+    <div *ngIf="noTags" class="new-clip__add-tags">
+      <span>There are no tags yet! Add some!</span>
+    </div>
+    <div *ngIf="!noTags" class="">
+      <div class="tag" *ngFor="let tag of clip.tags">
+        <app-tag [tag]="tag"></app-tag>
+      </div>
+    </div>
+    <div class="tags__add">
+      <input type="text" [(ngModel)]="newTag" class="form-control">
+      <button type="submit" (click)="addNewTag(newTag)" class="btn">Add Tag</button>
+    </div>
+  </div>
+  <div class="new-clip__submit-container">
+    <button type="submit" (click)="createNewClip()" class="new-clip__submit btn">{{submitButtonText}}</button>
+  </div>
+</div>

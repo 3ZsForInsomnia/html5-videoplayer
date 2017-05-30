@@ -1,0 +1,10 @@
+<div class="header">
+  <div *ngIf="!isEditingPlaylistName" class="header--not-editing" (click)="playVideo()">
+    <h3 class="header__title">Full Video: {{name}}</h3>
+    <span (click)="editPlaylistName()" class="header__edit glyphicon glyphicon-edit"></span>
+  </div>
+  <div *ngIf="isEditingPlaylistName" class="header--editing">
+    <input type="text" value="{{name}}" [(ngModel)]="name" class="form-control editing__input">
+    <button type="submit" (click)="savePlaylistName()" class="btn editing__submit">Save</button>
+  </div>
+</div>

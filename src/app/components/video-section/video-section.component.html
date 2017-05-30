@@ -1,0 +1,8 @@
+<div class="video-section">
+  <div class="video-section__header">
+    <app-video-source [baseVideo]="baseVideoSource$ | async" (loadEvent)="loadNewUrl($event)"></app-video-source>
+  </div>
+  <div class="video-section__player">
+    <app-video-player></app-video-player>
+  </div>
+</div>

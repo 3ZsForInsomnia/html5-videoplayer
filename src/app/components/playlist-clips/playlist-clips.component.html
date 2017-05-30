@@ -1,0 +1,10 @@
+<div class="clips">
+  <div class="clips__list">
+    <div *ngFor="let clip of clips">
+      <app-clip [baseVideoSource]="baseVideoSource" [clip]="clip"></app-clip>
+    </div>
+  </div>
+  <div class="clips__new">
+    <app-clip-new></app-clip-new>
+  </div>
+</div>

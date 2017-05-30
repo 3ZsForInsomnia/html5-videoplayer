@@ -1,0 +1,31 @@
+.content-container {
+    margin: 10px 10%;
+    display: flex;
+}
+
+.video-player {
+    width: calc(100% - 350px);
+}
+
+.video-player--expanded {
+    width: calc(100% - 40px);
+}
+
+.playlist {
+    width: 350px;
+}
+
+.playlist__collapse-btn {
+    margin-top: 32px;
+    float: right;
+}
+
+.playlist--collapsed {
+    width: 40px;
+}
+
+.playlist__container {
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 67px 0 0 20px;
+}

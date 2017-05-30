@@ -1,0 +1,57 @@
+.clip {
+    padding: 20px 0 0 20px;
+}
+
+.clip__title {
+    margin: 0;
+    padding: 5px 0;
+    display: inline-block;
+}
+
+.clip__title:hover {
+    color: lightblue;
+}
+
+.clip__edit {
+    margin: auto 0;
+    float: right;
+    padding: 0 5px;
+}
+
+.clip__header--not-editing {
+    display: flex;
+    justify-content: space-between;
+}
+
+.clip__header--editing {
+    display: flex;
+}
+
+.clip__input {
+    font-size: 24px;
+    color: #333;
+    padding-left: 20px;
+}
+
+.clip-times {
+    margin: 0 10px 10px 0;
+    border: 1px solid grey;
+    border-radius: 5px;
+    display: flex;
+    padding: 5px 0;
+    justify-content: space-around;
+}
+
+.clip-times__input {
+    display: inline-block;
+    width: 75px;
+}
+
+.invalid {
+    border: red 1px solid;
+}
+
+.invalid-text {
+    text-align: center;
+    color: red;
+}
