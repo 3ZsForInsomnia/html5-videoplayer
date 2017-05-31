@@ -1,0 +1,39 @@
+<app-nav></app-nav>
+<div class="home">
+  <p>
+    Welcome to my video player! I hope you like it. I am definitely not a designer (as will become obvious upon clicking a nav
+    button), but it does the trick. Here I will go through some of the design decisions I made, of what to do and what to
+    avoid, and how it all works.
+  </p>
+  <p>
+    The short version is that this is an HTML5 video player that plays media fragments, hosted and supported by Angular 4 and
+    Ngrx (a Typescript implementation/variant of Redux). I tried to achieve a balance between a high level of functionality
+    and keep things streamlined/properly organized. As such, there is a decent amount of functionality above and beyond what
+    was requested, but not every feature is there. On the other side, things are broken down into reasonably sized components/reducers,
+    and SCSS is written in a way that avoids fragile posititioning.
+  </p>
+  <p>
+    However as with all projects, especially short term ones, there is always room for improvement: some components could be
+    broken down further, some SCSS refactored to be even more robust, and so on. I would be happy to discuss the places where
+    you or I feel more could be done. I would love some feedback on this project as I plan to fine-tune it further as time
+    goes on!
+  </p>
+  <p>
+    While most functionality I feel comes across as relatively obvious, one thing that might not be obvious is that the playlist
+    and clip titles highlight on hover, and are clickable. This is how one starts them playing. Any fragment, whole or otherwise
+    can be played at any time. While nothing occurs at the end of the overall video, clips proceed to play the next video
+    three seconds after each one finishes, in sequential order.
+  </p>
+  <p>
+    Clips can be created using the "paddles" at the bottom of the video player (in the "privileged" view only), or at the bottom
+    of the playlist section.
+  </p>
+  <p>
+    Lastly, there are two different views of the application. It is all the same SCSS, HTML and Angular 4 components, however
+    in one view all editing abilities are removed. Creating a user privileges scheme through routing is obviously not a robust 
+    practice, but here it serves its purpose. An advanced/better way to do this would be to separate all editing capabilities 
+    into components all within a separate module, and only loading that module if the user had the appropriate privileges. This 
+    approach might be what is used in the future on this project.
+  </p>
+  <p>Enjoy!</p>
+</div>

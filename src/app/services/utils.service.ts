@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Playlist } from './../models/playlist';
 import { IClip } from './../models/clip';
 import { CurrentlyPlaying } from './../models/currently-playing'
 
 @Injectable()
-export class PlaylistService {
+export class UtilsService {
+  constructor(private router: Router) { }
+
+  getIsPublicView(): boolean {
+    let location = this.router.url;
+    if (location.indexOf('priv') > -1) {
+      return true;
+    }
+    return false;
+  }
+
   generateSrcUrl(baseUrl: string, clip?: IClip) {
     let src = baseUrl;
     if (clip) {
@@ -19,7 +30,7 @@ export class PlaylistService {
 
   getStartTimeFromSource(source: string): number {
     let indexOfFragment = source.indexOf('#t=');
-    if(indexOfFragment > -1) {
+    if (indexOfFragment > -1) {
       let substring = source.substring(indexOfFragment + 3, source.indexOf(','));
       let value = parseInt(substring);
       return value;
@@ -29,7 +40,7 @@ export class PlaylistService {
 
   getEndTimeFromSource(source: string): number {
     let indexOfFragment = source.indexOf('#t=');
-    if(indexOfFragment > -1) {
+    if (indexOfFragment > -1) {
       let fragmentSubString = source.substring(indexOfFragment + 3);
       let endTime = fragmentSubString.substring(fragmentSubString.indexOf(',') + 1);
       let value = parseInt(endTime);

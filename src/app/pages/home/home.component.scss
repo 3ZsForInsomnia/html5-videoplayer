@@ -1,0 +1,9 @@
+@import './../../common/global.scss';
+
+.home {
+    width: 80%;
+    margin: 30px auto;
+    padding: 40px;
+    font-size: 18px;
+    @extend .border;
+}

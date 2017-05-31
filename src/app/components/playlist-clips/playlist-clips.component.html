@@ -3,8 +3,11 @@
     <div *ngFor="let clip of clips">
       <app-clip [baseVideoSource]="baseVideoSource" [clip]="clip"></app-clip>
     </div>
+    <div *ngIf="clips.length === 0" class="clips__none-available">
+      <span>There are no clips in this playlist.</span>
+    </div>
   </div>
-  <div class="clips__new">
+  <div class="clips__new" *ngIf="canEdit">
     <app-clip-new></app-clip-new>
   </div>
 </div>

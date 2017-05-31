@@ -1,3 +1,5 @@
+@import './../../common/global.scss';
+
 .header,
 .tags__add {
     display: flex;
@@ -20,9 +22,8 @@
 }
 
 .new-clip__times {
+    @extend .border;
     margin: 5px;
-    border: 1px solid grey;
-    border-radius: 5px;
     display: flex;
     padding: 5px 10px;
     justify-content: space-between;
@@ -34,8 +35,7 @@
 }
 
 .tags {
-    border: 1px solid grey;
-    border-radius: 5px;
+    @extend .border;
     padding: 5px;
     margin: 5px;
 }

@@ -1,9 +1,33 @@
+@import './../../common/global.scss';
+
 .video-player {
     padding: 1px;
-    border: 1px solid grey;
-    border-radius: 5px;
+    @extend .border;
 }
 
 .video-player__body {
     width: 100%;
+}
+
+.video-paddles {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 40px;
+}
+
+.paddles__start, .paddles__end, .paddles__save {
+    background-color: blue;
+    color: white;
+    padding: 15px;
+    border: none;
+    margin: 0 0 auto 0;
+}
+
+.paddles__save {
+    margin: 15px auto;
+    width: 100%;
+}
+
+.paddles__name {
+    text-align: center;
 }

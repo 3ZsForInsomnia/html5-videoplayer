@@ -1,5 +1,7 @@
+@import './../../common//global.scss';
+
 .header {
-    border-bottom: 1px solid grey;
+    @extend .border;
 }
 
 .header__title {

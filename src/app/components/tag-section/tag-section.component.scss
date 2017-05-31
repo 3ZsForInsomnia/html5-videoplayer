@@ -1,6 +1,7 @@
+@import './../../common/global.scss';
+
 .tags {
-    border: 1px solid grey;
-    border-radius: 5px;
+    @extend .border;
     padding: 0 5px 5px 5px;
     margin-right: 5px;
 }

@@ -1,12 +1,12 @@
 <div class="clip">
   <div *ngIf="!isEditingClipName" class="clip__header--not-editing" (click)="playClip()">
     <h4 class="clip__title">{{clip.name}}</h4>
-    <div class="clip__edit">
+    <div *ngIf="canEdit" class="clip__edit">
       <span (click)="editClipName()" class="glyphicon glyphicon-edit"></span>
       <span (click)="deleteClip()" class="glyphicon glyphicon-remove"></span>
     </div>
   </div>
-  <div *ngIf="isEditingClipName" class="clip__header--editing">
+  <div *ngIf="isEditingClipName && canEdit" class="clip__header--editing">
     <input type="text" [(ngModel)]="name" class="form-control">
     <button type="submit" (click)="saveClipName(name)" class="btn">Save</button>
     <div class="clip__edit">
@@ -23,9 +23,9 @@
     <div>
       <span>End Time: {{clip.endTime}}</span>
     </div>
-    <span (click)="editClipTimes()" class="glyphicon glyphicon-edit"></span>
+    <span *ngIf="canEdit" (click)="editClipTimes()" class="glyphicon glyphicon-edit"></span>
   </div>
-  <div *ngIf="isEditingClipTimes" class="clip-times" [ngClass]="{'invalid': invalidClipTimes}">
+  <div *ngIf="isEditingClipTimes && canEdit" class="clip-times" [ngClass]="{'invalid': invalidClipTimes}">
     <div>
       <span>Start Time: </span><input type="text" [(ngModel)]="startTime" class="clip-times__input form-control">
     </div>

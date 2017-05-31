@@ -1,23 +1,28 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PlaylistService } from './../../services/playlist.service';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { UtilsService } from './../../services/utils.service';
 
 @Component({
   selector: 'app-playlist-header',
   templateUrl: './playlist-header.component.html',
   styleUrls: ['./playlist-header.component.scss'],
-  providers: [PlaylistService]
+  providers: [UtilsService]
 })
-export class PlaylistHeaderComponent {
+export class PlaylistHeaderComponent implements OnInit {
   @Input() name: string;
   @Input() baseVideoSource: string;  
   @Output() nameChanged = new EventEmitter<string>();
   @Output() playOriginalVideo = new EventEmitter<string>();
   isEditingPlaylistName: boolean = false;
+  canEdit: boolean;
 
-  constructor(private playlistService: PlaylistService) {}
+  constructor(private utilsService: UtilsService) {}
+
+  ngOnInit() {
+    this.canEdit = this.utilsService.getIsPublicView();
+  }
 
   playVideo() {
-    this.playOriginalVideo.emit(this.playlistService.generateSrcUrl(this.baseVideoSource));
+    this.playOriginalVideo.emit(this.utilsService.generateSrcUrl(this.baseVideoSource));
   }
 
   editPlaylistName() {

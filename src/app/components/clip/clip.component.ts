@@ -4,13 +4,13 @@ import * as playlist from './../../actions/playlist.actions';
 import * as clips from './../../actions/clips.actions';
 import * as fromRoot from '../../reducers';
 import { IClip } from './../../models/clip';
-import { PlaylistService } from './../../services/playlist.service';
+import { UtilsService } from './../../services/utils.service';
 
 @Component({
   selector: 'app-clip',
   templateUrl: './clip.component.html',
   styleUrls: ['./clip.component.scss'],
-  providers: [PlaylistService]
+  providers: [UtilsService]
 })
 export class ClipComponent implements OnInit {
   @Input() clip: IClip;
@@ -24,19 +24,20 @@ export class ClipComponent implements OnInit {
   successClipTimesSubmitText: string = 'Success!';
   submitClipTimesButtonText: string = this.defaultClipTimesSubmitText;
   invalidClipTimes: boolean = false;
-
   startTime: number;
   endTime: number;
+  canEdit: boolean;
 
-  constructor(private store: Store<fromRoot.State>, private playlistService: PlaylistService) { }
+  constructor(private store: Store<fromRoot.State>, private utilsService: UtilsService) { }
 
   ngOnInit() {
     this.startTime = this.clip.startTime;
     this.endTime = this.clip.endTime;
+    this.canEdit = this.utilsService.getIsPublicView();
   }
 
   playClip() {
-    let src = this.playlistService.generateSrcUrl(this.baseVideoSource, this.clip);
+    let src = this.utilsService.generateSrcUrl(this.baseVideoSource, this.clip);
     this.store.dispatch(new playlist.ChangeCurrentlyPlayingAction(src));
     this.store.dispatch(new clips.ChangeActiveClipAction(this.clip.name));
   }

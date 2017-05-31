@@ -1,3 +1,13 @@
 <div class="video-player">
   <video #videoplayer (pause)="paused()" class="video-player__body" src="{{currentlyPlaying$ | async}}" controls></video>
 </div>
+<div class="video-section__paddles">
+  <div class="video-paddles" *ngIf="canEdit">
+    <button class="paddles__start" (click)="startNewClip()">{{startButtonText}}</button>
+    <div class="paddles__middle">
+      <input type="text" [(ngModel)]="name" class="form-control paddles__name" placeholder="Name This Clip">
+      <button class="paddles__save" (click)="saveNewClip()">{{saveButtonText}}</button>
+    </div>
+    <button class="paddles__end" (click)="endNewClip()">{{endButtonText}}</button>
+  </div>
+</div>

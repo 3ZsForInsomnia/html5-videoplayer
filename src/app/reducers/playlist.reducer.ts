@@ -7,7 +7,7 @@ export interface State {
 };
 
 export const initialState: State = {
-  name: 'Name This Playlist!',
+  name: 'Default Playlist',
   baseVideoSrc: 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4',
   currentlyPlaying: 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4',
 };

@@ -1,14 +1,1 @@
-<div>
-  <div class="content-container">
-    <div class="video-player" [ngClass]="{'video-player--expanded': isPlaylistSectionCollapsed}">
-      <app-video-section></app-video-section>
-    </div>
-    <div class="playlist" [ngClass]="{'playlist--collapsed': isPlaylistSectionCollapsed}">
-      <button class="playlist__collapse-btn btn glyphicon" (click)="toggleCollapse()" [ngClass]="{'glyphicon-chevron-right': isPlaylistSectionCollapsed, 'glyphicon-chevron-left': !isPlaylistSectionCollapsed}">
-      </button>
-      <div class="playlist__container" *ngIf="!isPlaylistSectionCollapsed">
-        <app-playlist></app-playlist>
-      </div>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>

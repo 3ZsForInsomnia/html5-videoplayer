@@ -4,11 +4,16 @@
       <app-tag [tag]="tag"></app-tag>
     </div>
   </div>
-  <div *ngIf="noTags" class="tags__none">
-    <span>There are no tags yet! Add some!</span>
+  <div *ngIf="!canEdit && noTags">
+    <span class="tags__none">There are no tags for this clip.</span>
   </div>
-  <div class="tags__add">
-    <input type="text" [(ngModel)]="newTag" class="form-control">
-    <button type="submit" (click)="addNewTag(newTag)" class="btn">Add Tag</button>
+  <div *ngIf="canEdit">
+    <div *ngIf="noTags" class="tags__none">
+      <span>There are no tags yet! Add some!</span>
+    </div>
+    <div class="tags__add">
+      <input type="text" [(ngModel)]="newTag" class="form-control">
+      <button type="submit" (click)="addNewTag(newTag)" class="btn">Add Tag</button>
+    </div>
   </div>
 </div>
