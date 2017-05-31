@@ -16,4 +16,25 @@ export class PlaylistService {
     }
     return src;
   }
+
+  getStartTimeFromSource(source: string): number {
+    let indexOfFragment = source.indexOf('#t=');
+    if(indexOfFragment > -1) {
+      let substring = source.substring(indexOfFragment + 3, source.indexOf(','));
+      let value = parseInt(substring);
+      return value;
+    }
+    return 0;
+  }
+
+  getEndTimeFromSource(source: string): number {
+    let indexOfFragment = source.indexOf('#t=');
+    if(indexOfFragment > -1) {
+      let fragmentSubString = source.substring(indexOfFragment + 3);
+      let endTime = fragmentSubString.substring(fragmentSubString.indexOf(',') + 1);
+      let value = parseInt(endTime);
+      return value;
+    }
+    return -1;
+  }
 }

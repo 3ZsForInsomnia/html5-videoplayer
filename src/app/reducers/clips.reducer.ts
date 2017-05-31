@@ -1,5 +1,6 @@
 import { IClip } from './../models/clip';
 import * as clips from './../actions/clips.actions';
+import * as playlist from './../actions/playlist.actions';
 
 export interface State {
   clips: IClip[];
@@ -11,7 +12,7 @@ export const initialState: State = {
   activeClip: null
 };
 
-export function reducer(state = initialState, action: clips.Actions): State {
+export function reducer(state = initialState, action: clips.Actions | playlist.Actions): State {
   switch (action.type) {
     case clips.ADD_CLIP:
       return {
@@ -19,10 +20,7 @@ export function reducer(state = initialState, action: clips.Actions): State {
         clips: [...state.clips, action['payload']]
       };
     case clips.DELETE_CLIP:
-      let indexForDelete = returnIndexFromClipName(action.payload, state.clips);
-      let firstHalfForDelete = state.clips.slice(0, indexForDelete);
-      let secondHalfForDelete = state.clips.slice(indexForDelete + 1);
-      let notDeletedClips = [].concat(firstHalfForDelete, secondHalfForDelete);
+      let notDeletedClips = returnNewArrayWithModifiedItem(action.payload, {}, state.clips);
       return {
         activeClip: state.activeClip,
         clips: notDeletedClips
@@ -34,56 +32,66 @@ export function reducer(state = initialState, action: clips.Actions): State {
       };
     case clips.ADD_TAG_TO_CLIP:
       let indexForTags = returnIndexFromClipName(action.payload.clipName, state.clips);
-      let clipsBeforeTaggedClip = state.clips.slice(0, indexForTags);
       let clipToRecieveNewTag = state.clips[indexForTags];
-      let clipWithNewTag: IClip = {
-        name: clipToRecieveNewTag.name,
-        startTime: clipToRecieveNewTag.startTime,
-        endTime: clipToRecieveNewTag.endTime,
+      let clipWithNewTag = {
         tags: [].concat(clipToRecieveNewTag.tags, action.payload.tag)
       }
-      let clipsAfterTaggedClip = state.clips.slice(indexForTags + 1);
-      let taggedClips = [].concat(clipsBeforeTaggedClip, clipWithNewTag, clipsAfterTaggedClip);
+      let taggedClips = returnNewArrayWithModifiedItem(action.payload.clipName, clipWithNewTag, state.clips);
       return {
         activeClip: state.activeClip,
         clips: taggedClips
       };
     case clips.CHANGE_CLIP_NAME:
-      let indexForName = returnIndexFromClipName(action.payload.oldName, state.clips);
-      let clipsBeforeNameChangedClip = state.clips.slice(0, indexForName);
-      let clipToRecieveNewName = state.clips[indexForName];
-      let clipWithNewName: IClip = {
+      let clipWithNewName = {
         name: action.payload.newName,
-        startTime: clipToRecieveNewName.startTime,
-        endTime: clipToRecieveNewName.endTime,
-        tags: clipToRecieveNewName.tags
       }
-      let clipsAfterNameChangedClip = state.clips.slice(indexForName + 1);
-      let namedClips = [].concat(clipsBeforeNameChangedClip, clipWithNewName, clipsAfterNameChangedClip);
+      let nameChangedClips = returnNewArrayWithModifiedItem(action.payload.oldName, clipWithNewName, state.clips);
       return {
         activeClip: state.activeClip,
-        clips: namedClips
+        clips: nameChangedClips
       };
     case clips.CHANGE_CLIP_TIMES:
-      let indexForTimes = returnIndexFromClipName(action.payload.clipName, state.clips);
-      let clipsBeforeTimeChangedClip = state.clips.slice(0, indexForTimes);
-      let clipToChangeTimes = state.clips[indexForTimes];
-      let clipWithNewTimes: IClip = {
-        name: clipToChangeTimes.name,
+      let clipWithNewTimes = {
         startTime: action.payload.startTime,
         endTime: action.payload.endTime,
-        tags: clipToChangeTimes.tags
       }
-      let clipsAfterTimeChangedClip = state.clips.slice(indexForTimes + 1);
-      let timeChangedClips = [].concat(clipsBeforeTimeChangedClip, clipWithNewTimes, clipsAfterTimeChangedClip);
+      let timeChangedClips = returnNewArrayWithModifiedItem(action.payload.clipName, clipWithNewTimes, state.clips);
       return {
         activeClip: state.activeClip,
         clips: timeChangedClips
       };
-    case clips.MOVE_TO_NEXT_CLIP: // changes active clip to be next clip, or changes it to null if at end
-      return state;
-    case clips.MOVE_TO_PREV_CLIP: // changes active clip to be prev clip, or changes it to null if at beginning
-      return state;
+    case clips.MOVE_TO_NEXT_CLIP:
+      let activeClipNext: IClip;
+      if (!state.activeClip) {
+        activeClipNext = state.clips[0];
+      } else {
+        activeClipNext = state.activeClip;
+      }
+      let indexForNext = returnIndexFromClipName(activeClipNext.name, state.clips);
+      if (indexForNext === state.clips.length - 1) {
+        return state;
+      }
+      return {
+        clips: state.clips,
+        activeClip: state.clips[indexForNext + 1]
+      };
+    case clips.MOVE_TO_PREV_CLIP:
+      let activeClipPrev: IClip;
+      if (!state.activeClip) {
+        activeClipPrev = state.clips[state.clips.length - 1];
+      } else {
+        activeClipPrev = state.activeClip;
+      }
+      let index = returnIndexFromClipName(activeClipPrev.name, state.clips);
+      if (index === 0) {
+        return state;
+      }
+      return {
+        clips: state.clips,
+        activeClip: state.clips[index - 1]
+      };
+    case playlist.CHANGE_BASE_SRC: // used to nuke current state if we load a different base URL
+      return initialState;
     default: {
       return state;
     }
@@ -99,6 +107,32 @@ function returnIndexFromClipName(clipName: string, clips: IClip[]) {
       }
     }
   );
+}
+
+function returnNewArrayWithModifiedItem(clipNameToChange: string, newObj: any, array: IClip[]) {
+  // get the index of the clip getting replaced
+  let oldClipIndex = returnIndexFromClipName(clipNameToChange, array);
+
+  // get the clip to be replaced so we can access its properties
+  let oldClip = array[oldClipIndex];
+
+  // get section of array before oldClip
+  let arrayBeforeChangedClip = array.slice(0, oldClipIndex);
+
+  // get section of array after oldClip
+  let arrayAfterChangedClip = array.slice(oldClipIndex + 1);
+
+  // if we recieved an empty object, it means we are deleting the object
+  // in that case, we simply return the sections of the array without the clip
+  if (Object.keys(newObj).length === 0 && newObj.constructor === Object) {
+    return [].concat(arrayBeforeChangedClip, arrayAfterChangedClip);
+  }
+
+  // create a new clip object using oldClip and overriding its properties with the new properties given in newObj
+  let newClip: IClip = Object.assign({}, oldClip, newObj);
+
+  // return a totally new array consisting of the above
+  return [].concat(arrayBeforeChangedClip, newClip, arrayAfterChangedClip);
 }
 
 export const getActiveClip = (state: State) => state.activeClip;

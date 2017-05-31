@@ -3,6 +3,6 @@
     <app-video-source [baseVideo]="baseVideoSource$ | async" (loadEvent)="loadNewUrl($event)"></app-video-source>
   </div>
   <div class="video-section__player">
-    <app-video-player></app-video-player>
+    <app-video-player [baseVideoSource]="baseVideoSource$ | async"></app-video-player>
   </div>
 </div>

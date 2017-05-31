@@ -23,5 +23,6 @@ export class TagSectionComponent implements OnInit {
 
   addNewTag(tag: string) {
     this.store.dispatch(new clips.AddTagToClipAction({clipName: this.clipName, tag: tag}));
+    this.noTags = false;
   }
 }

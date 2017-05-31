@@ -38,6 +38,7 @@ export class ClipComponent implements OnInit {
   playClip() {
     let src = this.playlistService.generateSrcUrl(this.baseVideoSource, this.clip);
     this.store.dispatch(new playlist.ChangeCurrentlyPlayingAction(src));
+    this.store.dispatch(new clips.ChangeActiveClipAction(this.clip.name));
   }
 
   editClipName() {
